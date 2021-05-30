@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 import os
-import time
+import shutil
 import requests
 import ffmpeg
 
@@ -12,6 +12,8 @@ counter = 0
 x = input("Please enter song title: \n")
 y = input("Please enter artist name: \n")
 dirPath = x + y
+if not y:
+    y = ' '
 os.mkdir(dirPath)
 baseLink = 'https://www.youtube.com/results?search_query='
 lst = x.split() + y.split()
@@ -20,6 +22,7 @@ for word in lst:
     endpoint = endpoint + word
     endpoint = endpoint + '+'
     print(endpoint)
+endpoint = endpoint + 'Lyric'
 
 options = webdriver.ChromeOptions()
 options.add_experimental_option('prefs', {
@@ -56,7 +59,10 @@ driver.quit()
 video = requests.get(downloadLink)
 f = open(dirPath + '/song.mp4', 'wb')
 f.write(video.content)
+f.close()
 stream = ffmpeg.input(dirPath + '/song.mp4')
-stream = ffmpeg.output(stream, 'output.mp3')
+stream = ffmpeg.output(stream, y + '-' + x +'.mp3')
 ffmpeg.run(stream)
+os.remove(dirPath + '/song.mp4')
+os.rmdir(dirPath)
 
