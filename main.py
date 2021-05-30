@@ -24,13 +24,6 @@ for word in lst:
     print(endpoint)
 endpoint = endpoint + 'Lyric'
 
-options = webdriver.ChromeOptions()
-options.add_experimental_option('prefs', {
-"download.default_directory": "D:\Zagruzchik\python",
-"download.prompt_for_download": False,
-"download.directory_upgrade": True,
-"plugins.always_open_pdf_externally": True
-})
 driver = webdriver.Chrome(executable_path='./chromedriver.exe', options=options)
 driver.get(endpoint)
 delay = 10
