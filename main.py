@@ -24,7 +24,7 @@ for word in lst:
     print(endpoint)
 endpoint = endpoint + 'Lyric'
 
-driver = webdriver.Chrome(executable_path='./chromedriver.exe', options=options)
+driver = webdriver.Chrome(executable_path='./chromedriver.exe')
 driver.get(endpoint)
 delay = 10
 
